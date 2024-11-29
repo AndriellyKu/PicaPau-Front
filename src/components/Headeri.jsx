@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {setDados, getDados} from "./local.jsx"
 import './Headeri.css';
 
 const Headeri = () => {
@@ -7,6 +8,16 @@ const Headeri = () => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  const [display, setDisplay] = useState("block")
+  const [user, setUser] = useState(getDados([]))
+  useEffect(() => {
+    console.log(user.user.tipo)
+    if(user.user.tipo === "Lider"){
+      setDisplay("none");
+    }  
+  }, [])
+  
 
   return (
     <header className="headeri">
@@ -26,8 +37,8 @@ const Headeri = () => {
 
       {/* Links de navegação com a classe 'open' dinâmica */}
       <nav className={`nav-links ${menuOpen ? 'open' : ''}`}>
-        <a href="/recrutamentos">Recrutamentos</a>
-        <a href="/equipes">Equipes</a>
+        <a href="/recrutamentos" className={`d-${display}`}>Recrutamentos</a>
+        <a href="/equipes" className={`d-${display}`}>Equipes</a>
       </nav>
     </header>
   );
