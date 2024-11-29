@@ -11,6 +11,7 @@ import Perfil from './pages/Perfil/Perfil.jsx';
 import Equipe from './pages/Equipe/Equipe.jsx';
 import Lider from './pages/lider/Lider.jsx';
 import RecrutamentoDetalhes from './pages/RecrutamentoDetalhes/RecrutamentoDetalhes.jsx';
+import CadastrarCurriculo from './pages/cadastrarCurruculo/cadastrarCurriculo.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
       {path: "perfil", element: <Perfil />},
       {path: "equipe", element: <Equipe />},
       {path: "lider", element: <Lider />},
+      {path: "Curriculo/Cadastrar", element: <CadastrarCurriculo />},
       {path: "RecrutamentoDetalhes", element: <RecrutamentoDetalhes />}
     ]
   }

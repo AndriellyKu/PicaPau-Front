@@ -11,23 +11,25 @@ const Headeri = () => {
   };
 
   const [display, setDisplay] = useState("block")
+  const [rota, setRota] = useState("/home")
   const [user, setUser] = useState(getDados([]))
   useEffect(() => {
     console.log(user.user.tipo)
     if(user.user.tipo === "Lider"){
       setDisplay("none");
+      setRota("/lider")
     }  
   }, [])
   
 
   return (
     <header className="headeri">
-      <div className="lg-hd">
+      <a className="lg-hd" href={rota}>
         <img
           src={picaPau}
           alt="Logo Pica Pau Móveis"
         />
-      </div>
+      </a>
 
       <div className={`hamburger ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
         <div className="line"></div>

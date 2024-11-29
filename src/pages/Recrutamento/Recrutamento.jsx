@@ -1,37 +1,63 @@
 import React from 'react';
 import './Recrutamento.css';
 import Headeri from '../../components/Headeri';
+import {setDados, getDados} from "../../components/local.jsx"
+import {useEffect, useState} from "react"
+import axios from "axios";
 
 const Recrutamento = () => {
-  const recrutamentos = [];
+  
+  let user;
+  useEffect(() => {
+      user = getDados();
+      console.log(user);
+      getEquipes(user.token);
+  }, [0]);
+
+  const [recrutamento, setRecrutamento] = useState([]);
+
+  async function getEquipes(token) {
+    const url = axios.create({
+        baseURL: "https://picapauapi-production.up.railway.app/api",
+        headers: {
+            Authorization: `Bearer ${token}`, 
+        }
+    });
+
+    url.get("recrutamentos/meus-recrutamentos")
+    .then((resp) => {
+        console.log(resp.data);
+        setRecrutamento(resp.data.recrutamentos);
+        console.log(recrutamento)
+    }).catch((error) => {
+        console.log(error);
+    });
+  }
 
   return (
-    <div>
+    <>
       <Headeri />
       
       <div className="recrutamentos-container">
         <h1 className="title">Recrutamentos</h1>
 
         <div className="recrutamentos-list">
-          {recrutamentos.length > 0 ? (
-            recrutamentos.map((recrutamento) => (
-              <div key={recrutamento.id} className="recrutamento-item">
-                <span>{recrutamento.titulo}</span>
-                <span className="termino">Término em {recrutamento.termino}</span>
-              </div>
-            ))
-          ) : (
-            <div className="recrutamento-item">
-              Nenhum recrutamento disponível no momento.
-            </div>
-          )}
+            {recrutamento.map((rec) => {
+              
+              return (
+                <div className="recrutamento-card" key={rec.id}>
+                    <h2>{rec.nome}</h2>
+                    <p>{rec.descricao}</p>
+                </div>
+              )
+            })}
         </div>
 
         <a className="create-button" href="/recrutamento/criar">
           Criar
         </a>
       </div>
-    </div>
+    </>
   );
 };
 

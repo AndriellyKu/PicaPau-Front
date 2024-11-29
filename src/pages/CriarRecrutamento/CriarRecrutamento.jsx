@@ -1,65 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CriarRecrutamento.css';
 import Headeri from '../../components/Headeri';
+import {setDados, getDados} from "../../components/local.jsx"
+import axios from 'axios';
 
-const CriarRecrutamento = () => {
-  const [formData, setFormData] = useState({
-    nome: '',
-    descricao: '',
-    curriculos: [],
-  });
-  const [availableCandidates, setAvailableCandidates] = useState([
-    // Exemplo de candidatos disponíveis
-    { id: '1', name: 'Candidato 1' },
-    { id: '2', name: 'Candidato 2' },
-  ]);
-  const [teamMembers, setTeamMembers] = useState([]);
-  const navigate = useNavigate();
+function CriarRecrutamento (){
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const [nome, setNome] = useState('');
+  const [descricao, setDescricao] = useState('');
+  const [curriculos, setCurriculos] = useState(["67476832893fb118482365cf"]); 
 
-  const addToTeam = (candidate) => {
-    setTeamMembers([...teamMembers, candidate]);
-    setAvailableCandidates(availableCandidates.filter((c) => c.id !== candidate.id));
-    setFormData({
-      ...formData,
-      curriculos: [...formData.curriculos, candidate.id],
-    });
-  };
+  let user = getDados()
 
-  const removeFromTeam = (member) => {
-    setAvailableCandidates([...availableCandidates, member]);
-    setTeamMembers(teamMembers.filter((m) => m.id !== member.id));
-    setFormData({
-      ...formData,
-      curriculos: formData.curriculos.filter((id) => id !== member.id),
-    });
-  };
-
-  const handleSubmit = async (e) => {
+  function funCriarRecrutamento(e){
     e.preventDefault();
-    try {
-      const response = await fetch('https://picapauapi-production.up.railway.app/api/recrutamentos/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        alert('Recrutamento criado com sucesso!');
-        //navigate(/recrutamentos/${data._id});
-      } else {
-        alert('Erro ao criar recrutamento: ' + data.message);
+    console.log("Nome: " + nome)
+    console.log("Descricao: " + descricao)
+
+
+    const url = axios.create({
+      baseURL: "https://picapauapi-production.up.railway.app/api",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
       }
-    } catch (error) {
-      alert('Erro ao conectar ao servidor: ' + error.message);
-    }
-  };
+    });
+    url.post("recrutamentos", {
+      nome:nome,
+      descricao:descricao,
+      curriculos:curriculos
+    }).then((resp) => {
+      console.log(resp.data);
+      setNome("");
+      setDescricao("");
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
+
+  //
+
+  const [listaCurriculos, setListaCurriculos] = useState([]);
+
+  useEffect(() => {
+    const httpCurriculos = axios.create({
+      baseURL: "https://picapauapi-production.up.railway.app/api",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      }
+    })
+    
+    httpCurriculos.get("curriculos/meus-curriculos")
+      .then((response) => {
+        setListaCurriculos(response.data);
+        console.log(response.data.curriculos);
+        setListaCurriculos(response.data.curriculos);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <>
@@ -68,16 +69,15 @@ const CriarRecrutamento = () => {
         <div className="container mt-4">
           <h1 className="recruitment-title">Criar Novo Recrutamento</h1>
 
-          {/* Formulário de Criação */}
           <div className="form-container">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={funCriarRecrutamento}>
               <div className="form-group">
                 <label>Nome do Recrutamento</label>
                 <input
                   type="text"
                   name="nome"
-                  value={formData.nome}
-                  onChange={handleInputChange}
+                  value={nome}
+                  onChange={(e) => {setNome(e.target.value)}}
                   placeholder="Nome do Recrutamento"
                   required
                 />
@@ -86,72 +86,30 @@ const CriarRecrutamento = () => {
                 <label>Descrição</label>
                 <textarea
                   name="descricao"
-                  value={formData.descricao}
-                  onChange={handleInputChange}
+                  value={descricao}
+                  onChange={(e) => {setDescricao(e.target.value)}}
                   placeholder="Descrição"
                   rows="4"
                   required
                 ></textarea>
               </div>
+              <div>
+                <h3>Selecione os Curriculos</h3>
+                {
+                  listaCurriculos.map((cur) => {
+
+                    return(
+                      <div>
+                        <p>{cur.name}</p>
+                      </div>
+                    );
+                  })
+                }
+              </div>
+              <div>
+                <button type="submit" className="btn btn-primary">Criar</button>
+              </div>
             </form>
-          </div>
-
-          {/* Gerenciamento de Candidatos */}
-          <div className="row mt-5">
-            <div className="col-md-6">
-              <h3 className="section-title">Currículos Disponíveis</h3>
-              <div className="d-flex flex-wrap">
-                {availableCandidates.length > 0 ? (
-                  availableCandidates.map((candidate) => (
-                    <div key={candidate.id} className="candidate-card m-2 p-2">
-                      <span>{candidate.name}</span>
-                      <button
-                        className="add-button"
-                        onClick={() => addToTeam(candidate)}
-                      >
-                        +
-                      </button>
-                    </div>
-                  ))
-                ) : (
-                  <div className="candidate-card m-2 p-2">
-                    Nenhum candidato disponível no momento.
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="col-md-6">
-              <h3 className="section-title">Currículos Selecionados</h3>
-              <div className="d-flex flex-wrap">
-                {teamMembers.length > 0 ? (
-                  teamMembers.map((member) => (
-                    <div key={member.id} className="candidate-card m-2 p-2">
-                      <span>{member.name}</span>
-                      <button
-                        className="remove-button"
-                        onClick={() => removeFromTeam(member)}
-                      >
-                        -
-                      </button>
-                    </div>
-                  ))
-                ) : (
-                  <div className="candidate-card m-2 p-2">
-                    Nenhum membro na equipe ainda.
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-4">
-            <button
-              className="finalize-button"
-              onClick={handleSubmit}
-            >
-              Criar Recrutamento
-            </button>
           </div>
         </div>
       </div>
