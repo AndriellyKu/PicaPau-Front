@@ -16,7 +16,7 @@ const Cadastro = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [time, setTime] = useState(["timeA"]);
+  const [time, setTime] = useState([""]);
 
   const navigate = useNavigate();
 
