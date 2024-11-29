@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {setDados, getDados} from '../../components/'
 import axios from 'axios';
+import { setDados, getDados } from '../../components/local.jsx';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import './Login.css';
 
 const Curriculos = () => {
   const [data, setData] = useState([]);
@@ -53,7 +56,8 @@ const CadastroCurriculo = () => {
     formData.append('cpf', cpf);
     formData.append('arquivo', arquivo);
 
-    const token = localStorage.getItem('token');
+    const dados = getDados();
+    const token = dados?.token;
 
     axios.post('https://picapauapi-production.up.railway.app/api/curriculos/', formData, {
       headers: {
@@ -105,4 +109,61 @@ const CadastroCurriculo = () => {
   );
 };
 
-export { Curriculos, CadastroCurriculo };
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const navigate = useNavigate();
+
+  function funLogin(e) {
+    e.preventDefault();
+    if (email !== "" && senha !== "") {
+      axios.post("https://picapauapi-production.up.railway.app/api/login", {
+        email: email,
+        senha: senha
+      }).then((resp) => {
+        console.log(resp.data);
+        setDados({ token: resp.data.token }); // Armazena o token no localStorage
+        if (resp.data.user.tipo === "Gerenciador") {
+          navigate("/home");
+        } else {
+          navigate("/equipe");
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  }
+
+  return (
+    <div className="login-container">
+      <div className="login-left">
+        <img
+          src="src/assets/images/logo-picapau.png"
+          alt="Logo Pica Pau Móveis"
+          className="login-logo"
+        />
+      </div>
+      <div className="login-right">
+        <div className="login-box">
+          <h2>Login</h2>
+          <form onSubmit={funLogin}>
+            <div className="login-input">
+              <label className='cor-eti' htmlFor="email">Email</label>
+              <input type="email" id="email" placeholder="Digite seu email" onChange={(e) => { setEmail(e.target.value) }} required />
+            </div>
+            <div className="login-input">
+              <label className='cor-eti' htmlFor="password">Senha</label>
+              <input type="password" id="password" placeholder="Digite sua senha" onChange={(e) => { setSenha(e.target.value) }} required />
+            </div>
+            <button type="submit" className="login-button">Entrar</button>
+          </form>
+          <p className="signup-text">
+            Não tem uma conta? <Link to="/cadastro">Crie aqui</Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export { Curriculos, CadastroCurriculo, Login };

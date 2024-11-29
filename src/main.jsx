@@ -10,7 +10,7 @@ import CriarRecrutamento from './pages/CriarRecrutamento/CriarRecrutamento.jsx';
 import Perfil from './pages/Perfil/Perfil.jsx';
 import Equipe from './pages/Equipe/Equipe.jsx';
 import RecrutamentoDetalhes from './pages/RecrutamentoDetalhes/RecrutamentoDetalhes.jsx';
-import { CadastroCurriculo } from './pages/CadastroCurriculo/CadastroCurriculo.jsx'; // Importação correta
+import { CadastroCurriculo } from './pages/cadastroCurriculo/CadastroCurriculo.jsx'; // Importação correta
 
 const router = createBrowserRouter([
   {
