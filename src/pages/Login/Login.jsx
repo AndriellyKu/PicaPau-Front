@@ -1,5 +1,6 @@
 import React from 'react';
 import {useEffect, useState} from "react";
+import {setDados, getDados} from "../../components/local.jsx"
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import { Link } from 'react-router-dom';
@@ -22,11 +23,12 @@ const Login = () => {
         senha:senha
       }).then((resp) => {
         console.log(resp.data);
+        setDados(resp.data);
         if(resp.data.user.tipo == "Gerenciador"){
           navigate("/home");
         }
         else{
-          navigate("/equipe")
+          navigate("/lider")
         }
       }).catch((error) => {
         console.log(error);

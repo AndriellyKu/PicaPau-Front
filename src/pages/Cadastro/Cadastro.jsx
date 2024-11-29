@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {setDados, getDados} from "../../components/local.jsx"
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
@@ -29,7 +30,7 @@ const Cadastro = () => {
       console.log(selectedRole)  
       console.log(time)
 
-      if(selectedRole == "Grenciador"){
+      if(selectedRole == "Gerenciador"){
         axios.post("https://picapauapi-production.up.railway.app/api/cadastro", {
           nome:nome,
           email:email,
@@ -53,7 +54,7 @@ const Cadastro = () => {
         }).then((resp) => {
           console.log(resp.data);
           funLogin();
-          navigate("/equipe");
+          navigate("/lider");
         }).catch((error) => {
           console.log(error);
         })  
@@ -71,6 +72,7 @@ const Cadastro = () => {
         senha:senha
       }).then((resp) => {
         console.log(resp.data);
+        setDados(resp.data);
       }).catch((error) => {
         console.log(error);
       })
