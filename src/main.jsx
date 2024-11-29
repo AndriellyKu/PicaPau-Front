@@ -11,6 +11,7 @@ import Perfil from './pages/Perfil/Perfil.jsx';
 import Equipe from './pages/Equipe/Equipe.jsx';
 import RecrutamentoDetalhes from './pages/RecrutamentoDetalhes/RecrutamentoDetalhes.jsx';
 import { CadastroCurriculo } from './pages/cadastroCurriculo/CadastroCurriculo.jsx'; // Importação correta
+import InserirCurriculo from './pages/InserirCurriculo/InserirCurriculo.jsx';
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,8 @@ const router = createBrowserRouter([
       { path: "perfil", element: <Perfil /> },
       { path: "equipe", element: <Equipe /> },
       { path: "RecrutamentoDetalhes", element: <RecrutamentoDetalhes /> },
-      { path: "cadastroCurriculo", element: <CadastroCurriculo /> } // Nova rota adicionada aqui
+      { path: "cadastroCurriculo", element: <CadastroCurriculo /> },
+      { path: "inserirCurriculo", element: <InserirCurriculo /> } // Nova rota adicionada aqui
     ]
   }
 ]);
