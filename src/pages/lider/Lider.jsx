@@ -1,58 +1,52 @@
 import React from 'react';
+import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { getDados, setDados } from "../../components/local.jsx";
+import { useState, useEffect } from "react";
 import Headeri from '../../components/Headeri';
-import './lider.css'
+import './lider.css';
 
-const Lider = () => {
-  const teamMembers = [
-    "Felipe Garcia",
-    "Jose Luiz Pereira da Rosa",
-    "Eloísa Sortica",
-    "Guilherme Schu",
-    "Andrielly"
-  ];
+function Lider() {
+    let user;
+    useEffect(() => {
+        user = getDados();
+        console.log(user);
+        getEquipes(user.token);
+    }, []);
 
-  /*equipeF = {
-    nome:nome,
-    lider:email,
-    membros:[
-        {
-            nome,
-            email
-        },
-        {
-            nome,
-            email
-        },
-        {
-            nome,
-            email
-        },
-    ]
-}*/
+    const [equipe, setEquipe] = useState([]);
 
-  return (
-    <div>
-      <Headeri />
-      <div className="container mt-5">
-        <h1 className="mb-4">Minha Equipe</h1>
-        
-        <div className="list-group">
-          {teamMembers.map((member, index) => (
-            <div key={index} className="d-flex justify-content-between align-items-center list-group-item">
-              <span>{member}</span>
-              <a href="#" className="text-warning">Ver avaliações</a>
+    function getEquipes(token) {
+        const url = axios.create({
+            baseURL: "https://picapauapi-production.up.railway.app/api",
+            headers: {
+                Authorization: `Bearer ${token}`, 
+            }
+        });
+
+        url.get("/equipes/listar-equipes")
+            .then((resp) => {
+                console.log(resp.data);
+                setEquipe(resp.data);
+                console.log(equipe)
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
+
+    return (
+        <>
+            <Headeri />
+            <div className="list-group">
+                {equipe.map((member, index) => (
+                    <div key={index} className="d-flex justify-content-between align-items-center list-group-item">
+                    <span>{member}</span>
+                    <a href="#" className="text-warning">Ver avaliações</a>
+                    </div>
+                ))}
             </div>
-          ))}
-        </div>
-
-        <div className="d-flex justify-content-end mt-4">
-          <button className="btn btn-warning me-2">Editar</button>
-          <button className="btn btn-warning">Avaliar</button>
-        </div>
-      </div>
-    </div>
-  );
+        </>
+    );
 };
 
 export default Lider;

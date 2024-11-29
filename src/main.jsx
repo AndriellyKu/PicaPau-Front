@@ -21,7 +21,7 @@ const router = createBrowserRouter([
       {path: "cadastro", element: <Cadastro /> },
       {path: "home", element: <Home />},
       {path: "recrutamento", element: <Recrutamento />},
-      {path: "criarecrutamento", element: <CriarRecrutamento />},
+      {path: "recrutamento/criar", element: <CriarRecrutamento />},
       {path: "perfil", element: <Perfil />},
       {path: "equipe", element: <Equipe />},
       {path: "lider", element: <Lider />},

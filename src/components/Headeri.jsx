@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {setDados, getDados} from "./local.jsx"
 import './Headeri.css';
+import picaPau from "../assets/images/logo-picapau.png"
 
 const Headeri = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -23,21 +24,19 @@ const Headeri = () => {
     <header className="headeri">
       <div className="lg-hd">
         <img
-          src="src/assets/images/logo-picapau.png"
+          src={picaPau}
           alt="Logo Pica Pau Móveis"
         />
       </div>
 
-      {/* Botão de hambúrguer */}
       <div className={`hamburger ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
         <div className="line"></div>
         <div className="line"></div>
         <div className="line"></div>
       </div>
 
-      {/* Links de navegação com a classe 'open' dinâmica */}
       <nav className={`nav-links ${menuOpen ? 'open' : ''}`}>
-        <a href="/recrutamentos" className={`d-${display}`}>Recrutamentos</a>
+        <a href="/Recrutamento" className={`d-${display}`}>Recrutamentos</a>
         <a href="/equipes" className={`d-${display}`}>Equipes</a>
       </nav>
     </header>

@@ -27,9 +27,9 @@ const Recrutamento = () => {
           )}
         </div>
 
-        <button className="create-button" onClick={() => alert("Criar novo recrutamento")}>
+        <a className="create-button" href="/recrutamento/criar">
           Criar
-        </button>
+        </a>
       </div>
     </div>
   );
