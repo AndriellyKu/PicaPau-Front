@@ -21,27 +21,27 @@ const Perfil = () => {
                         <div className="row">
                             <div className="col-md-6 mb-3">
                                 <label>Nome</label>
-                                <input type="text" className="form-control" value="Felipe Garcia" readOnly />
+                                <input type="text" className="form-control" value="Felipe Garcia" />
                             </div>
                             <div className="col-md-6 mb-3">
                                 <label>Função</label>
-                                <input type="text" className="form-control" value="Marceneiro" readOnly />
+                                <input type="text" className="form-control" value="Marceneiro" />
                             </div>
                             <div className="col-md-6 mb-3">
                                 <label>CPF</label>
-                                <input type="text" className="form-control" value="458.589.547-92" readOnly />
+                                <input type="text" className="form-control" value="458.589.547-92" />
                             </div>
                             <div className="col-md-6 mb-3">
                                 <label>Número de telefone</label>
-                                <input type="text" className="form-control" value="9981010287" readOnly />
+                                <input type="text" className="form-control" value="9981010287" />
                             </div>
                             <div className="col-md-6 mb-3">
                                 <label>Email</label>
-                                <input type="email" className="form-control" value="FelipegarçaNeto@gmail.com" readOnly />
+                                <input type="email" className="form-control" value="FelipegarçaNeto@gmail.com" />
                             </div>
                             <div className="col-md-6 mb-3">
                                 <label>Equipe</label>
-                                <select className="form-control" defaultValue="Marcenaria II" disabled>
+                                <select className="form-control" defaultValue="Marcenaria II">
                                     <option>Marcenaria I</option>
                                     <option>Marcenaria II</option>
                                     <option>Marcenaria III</option>
