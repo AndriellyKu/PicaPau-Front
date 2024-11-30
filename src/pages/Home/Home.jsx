@@ -28,6 +28,13 @@ const Home = () => {
             Ver Currículos
           </button>
         </div>
+        <div className="option-card">
+          <h3>Cadastrar Funcionário</h3>
+          <p>Cadastre novos funcionários no sistema.</p>
+          <button onClick={() => window.location.href = '/cadastrar-funcionario'}>
+            Cadastrar Funcionário
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -13,6 +13,7 @@ import Lider from './pages/lider/Lider.jsx';
 import RecrutamentoDetalhes from './pages/RecrutamentoDetalhes/RecrutamentoDetalhes.jsx';
 import InserirCurriculo from './pages/InserirCurriculo/InserrirCurriculo.jsx'; // Verifique a capitalização
 import CurriculosPage from './pages/Curriculos/Curriculos.jsx'; // Importe o novo componente
+import PaginaCadastroFuncionario from './pages/CadastrarFuncionario/CadastrarFuncionario.jsx'; // Importe o novo componente
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,8 @@ const router = createBrowserRouter([
       { path: "lider", element: <Lider /> },
       { path: "RecrutamentoDetalhes", element: <RecrutamentoDetalhes /> },
       { path: "inserir-curriculo", element: <InserirCurriculo /> },
-      { path: "curriculos", element: <CurriculosPage /> } // Adicione a nova rota
+      { path: "curriculos", element: <CurriculosPage /> },
+      { path: "cadastrar-funcionario", element: <PaginaCadastroFuncionario /> } // Adicione a nova rota
     ]
   }
 ]);
