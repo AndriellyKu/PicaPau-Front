@@ -53,64 +53,73 @@ function CriarRecrutamento (){
     
     httpCurriculos.get("curriculos/meus-curriculos")
       .then((response) => {
-        setListaCurriculos(response.data);
+        setListaCurriculos(response.data.curriculos)
         console.log(response.data.curriculos);
-        setListaCurriculos(response.data.curriculos);
+        console.log(listaCurriculos);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
 
+  useEffect(() => {
+    console.log(listaCurriculos);
+  }, [listaCurriculos]);
+
   return (
     <>
       <Headeri />
       <div className="recruitment-page">
         <div className="container mt-4">
-          <h1 className="recruitment-title">Criar Novo Recrutamento</h1>
+          <div className="row">
+            <div className="col-12">
+              <h1 className="recruitment-title">Criar Novo Recrutamento</h1>
+            </div>
 
-          <div className="form-container">
-            <form onSubmit={funCriarRecrutamento}>
-              <div className="form-group">
-                <label>Nome do Recrutamento</label>
-                <input
-                  type="text"
-                  name="nome"
-                  value={nome}
-                  onChange={(e) => {setNome(e.target.value)}}
-                  placeholder="Nome do Recrutamento"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Descrição</label>
-                <textarea
-                  name="descricao"
-                  value={descricao}
-                  onChange={(e) => {setDescricao(e.target.value)}}
-                  placeholder="Descrição"
-                  rows="4"
-                  required
-                ></textarea>
-              </div>
-              <div>
-                <h3>Selecione os Curriculos</h3>
-                {
-                  listaCurriculos.map((cur) => {
+            <div className="form-container">
+              <form onSubmit={funCriarRecrutamento}>
+                <div className="form-group">
+                  <label>Nome do Recrutamento</label>
+                  <input
+                    type="text"
+                    name="nome"
+                    value={nome}
+                    onChange={(e) => {setNome(e.target.value)}}
+                    placeholder="Nome do Recrutamento"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Descrição</label>
+                  <textarea
+                    name="descricao"
+                    value={descricao}
+                    onChange={(e) => {setDescricao(e.target.value)}}
+                    placeholder="Descrição"
+                    rows="4"
+                    required
+                  ></textarea>
+                </div>
+                <div>
+                  <h3>Selecione os Curriculos</h3>
+                  {
+                    listaCurriculos.map((cur) => {
 
-                    return(
-                      <div>
-                        <p>{cur.name}</p>
-                      </div>
-                    );
-                  })
-                }
-              </div>
-              <div>
-                <button type="submit" className="btn btn-primary">Criar</button>
-              </div>
-            </form>
+                      return(
+                        <div>
+                          
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+                <div>
+                  <button type="submit" className="btn btn-primary">Criar</button>
+                </div>
+              </form>
+            </div>  
           </div>
+          
         </div>
       </div>
     </>

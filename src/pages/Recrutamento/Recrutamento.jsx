@@ -43,12 +43,15 @@ const Recrutamento = () => {
 
         <div className="recrutamentos-list">
             {recrutamento.map((rec) => {
-              
+
               return (
-                <div className="recrutamento-card" key={rec.id}>
-                    <h2>{rec.nome}</h2>
-                    <p>{rec.descricao}</p>
-                </div>
+                 <a
+                    className="recrutamento-item"
+                    href={`/Recrutamento/Detalhes/${rec._id}`}
+                    style={{ cursor: 'pointer', textDecoration: 'none' }}
+                  >
+                    <span>{rec.nome}</span>
+                  </a>
               )
             })}
         </div>

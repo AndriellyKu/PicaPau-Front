@@ -27,7 +27,7 @@ const router = createBrowserRouter([
       {path: "equipe", element: <Equipe />},
       {path: "lider", element: <Lider />},
       {path: "Curriculo/Cadastrar", element: <CadastrarCurriculo />},
-      {path: "RecrutamentoDetalhes", element: <RecrutamentoDetalhes />}
+      {path: "recrutamento/detalhes/:id", element: <RecrutamentoDetalhes />}
     ]
   }
 ]);

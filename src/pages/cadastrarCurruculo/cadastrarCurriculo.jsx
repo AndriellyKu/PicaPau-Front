@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { getDados } from "../../components/local";
 import axios from "axios";
+import Headeri from "../../components/Headeri";
+import { Navigate } from "react-router-dom";
 
 function CadastrarCurriculo() {
     const [nome, setNome] = useState("");
@@ -34,6 +36,10 @@ function CadastrarCurriculo() {
             http.post("curriculos/", formData)
                 .then((resp) => {
                     console.log(resp.data);
+                    setNome("");
+                    setEmail("");
+                    setCpf("");
+                    setArquivo(null);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -45,30 +51,60 @@ function CadastrarCurriculo() {
 
     return (
         <>
-            <h2>Cadastrar Curriculo</h2>
-            <form onSubmit={funCadastrarCurriculo}>
-                <input
-                    type="text"
-                    placeholder="Nome"
-                    onChange={(e) => setNome(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Email"
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                    type="text"
-                    placeholder="Cpf"
-                    onChange={(e) => setCpf(e.target.value)}
-                />
-                <input
-                    type="file"
-                    accept="application/pdf"
-                    onChange={(e) => setArquivo(e.target.files[0])}
-                />
-                <input type="submit" />
-            </form>
+            <Headeri/>
+            <div className="container mt-5">
+                <div className="row">
+                    <div className="col-12 mb-3">
+                        <h2>Cadastrar Curriculo</h2>     
+                    </div>
+                    
+                    <form onSubmit={funCadastrarCurriculo} className="row d-flex justify-content-center">
+                        <div className="col-12 mb-4">
+                            <label className="ms-2">Nome</label>
+                            <input
+                                type="text"
+                                placeholder="Nome"
+                                value={nome}
+                                onChange={(e) => setNome(e.target.value)}
+                                className="w-100 p-2"
+                            />    
+                        </div>
+                        <div className="col-12 mb-4">
+                            <label className="ms-2">Email</label>
+                            <input
+                                type="text"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-100 p-2"
+                            />    
+                        </div>
+                        <div className="col-12 mb-4">
+                            <label className="ms-2">CPF</label>
+                            <input
+                                type="text"
+                                placeholder="Cpf"
+                                value={cpf}
+                                onChange={(e) => setCpf(e.target.value)}
+                                className="w-100 p-2"
+                            />    
+                        </div>
+                        <div className="col-12">
+                            <label className="ms-2">Currículo (PDF)</label>
+                            <input
+                                type="file"
+                                accept="application/pdf"
+                                onChange={(e) => setArquivo(e.target.files[0])}
+                                className="w-100 p-2"
+                            />    
+                        </div>
+                        <div className="col-4 my-5">
+                            <input type="submit" className="p-3 w-100" />
+                        </div>
+                    </form>        
+                </div>
+            </div>
+            
         </>
     );
 }
