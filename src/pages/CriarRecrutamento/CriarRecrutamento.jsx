@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CriarRecrutamento.css';
 import Headeri from '../../components/Headeri';
+import {setDados, getDados} from "../../components/local.jsx"
+import axios from 'axios';
 
 const CriarRecrutamento = () => {
   const [formData, setFormData] = useState({
@@ -66,93 +70,55 @@ const CriarRecrutamento = () => {
       <Headeri />
       <div className="recruitment-page">
         <div className="container mt-4">
-          <h1 className="recruitment-title">Criar Novo Recrutamento</h1>
-
-          {/* Formulário de Criação */}
-          <div className="form-container">
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Nome do Recrutamento</label>
-                <input
-                  type="text"
-                  name="nome"
-                  value={formData.nome}
-                  onChange={handleInputChange}
-                  placeholder="Nome do Recrutamento"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Descrição</label>
-                <textarea
-                  name="descricao"
-                  value={formData.descricao}
-                  onChange={handleInputChange}
-                  placeholder="Descrição"
-                  rows="4"
-                  required
-                ></textarea>
-              </div>
-            </form>
-          </div>
-
-          {/* Gerenciamento de Candidatos */}
-          <div className="row mt-5">
-            <div className="col-md-6">
-              <h3 className="section-title">Candidatos Disponíveis</h3>
-              <div className="d-flex flex-wrap">
-                {availableCandidates.length > 0 ? (
-                  availableCandidates.map((candidate) => (
-                    <div key={candidate.id} className="candidate-card m-2 p-2">
-                      <span>{candidate.name}</span>
-                      <button
-                        className="add-button"
-                        onClick={() => addToTeam(candidate)}
-                      >
-                        +
-                      </button>
-                    </div>
-                  ))
-                ) : (
-                  <div className="candidate-card m-2 p-2">
-                    Nenhum candidato disponível no momento.
-                  </div>
-                )}
-              </div>
+          <div className="row">
+            <div className="col-12">
+              <h1 className="recruitment-title">Criar Novo Recrutamento</h1>
             </div>
 
-            <div className="col-md-6">
-              <h3 className="section-title">Equipe Selecionada</h3>
-              <div className="d-flex flex-wrap">
-                {teamMembers.length > 0 ? (
-                  teamMembers.map((member) => (
-                    <div key={member.id} className="candidate-card m-2 p-2">
-                      <span>{member.name}</span>
-                      <button
-                        className="remove-button"
-                        onClick={() => removeFromTeam(member)}
-                      >
-                        -
-                      </button>
-                    </div>
-                  ))
-                ) : (
-                  <div className="candidate-card m-2 p-2">
-                    Nenhum membro na equipe ainda.
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+            <div className="form-container">
+              <form onSubmit={funCriarRecrutamento}>
+                <div className="form-group">
+                  <label>Nome do Recrutamento</label>
+                  <input
+                    type="text"
+                    name="nome"
+                    value={nome}
+                    onChange={(e) => {setNome(e.target.value)}}
+                    placeholder="Nome do Recrutamento"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Descrição</label>
+                  <textarea
+                    name="descricao"
+                    value={descricao}
+                    onChange={(e) => {setDescricao(e.target.value)}}
+                    placeholder="Descrição"
+                    rows="4"
+                    required
+                  ></textarea>
+                </div>
+                <div>
+                  <h3>Selecione os Curriculos</h3>
+                  {
+                    listaCurriculos.map((cur) => {
 
-          <div className="text-center mt-4">
-            <button
-              className="finalize-button"
-              onClick={handleSubmit}
-            >
-              Criar Recrutamento
-            </button>
+                      return(
+                        <div>
+                          
+                        </div>
+                      );
+                    })
+                  }
+                </div>
+                <div>
+                  <button type="submit" className="btn btn-primary">Criar</button>
+                </div>
+              </form>
+            </div>  
           </div>
+          
         </div>
       </div>
     </>

@@ -17,7 +17,6 @@ const Cadastro = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [time, setTime] = useState([""]);
 
   const navigate = useNavigate();
 
@@ -28,7 +27,6 @@ const Cadastro = () => {
       console.log(email)
       console.log(senha)
       console.log(selectedRole)  
-      console.log(time)
 
       if(selectedRole == "Gerenciador"){
         axios.post("https://picapauapi-production.up.railway.app/api/cadastro", {
@@ -49,8 +47,7 @@ const Cadastro = () => {
           nome:nome,
           email:email,
           senha:senha,
-          tipo:selectedRole,
-          equipe:time
+          tipo:selectedRole
         }).then((resp) => {
           console.log(resp.data);
           funLogin();
