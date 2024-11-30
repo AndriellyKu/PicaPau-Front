@@ -1,4 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
+
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './CriarRecrutamento.css';
@@ -6,65 +8,62 @@ import Headeri from '../../components/Headeri';
 import {setDados, getDados} from "../../components/local.jsx"
 import axios from 'axios';
 
-function CriarRecrutamento (){
+const CriarRecrutamento = () => {
+  const [formData, setFormData] = useState({
+    nome: '',
+    descricao: '',
+    curriculos: [],
+  });
+  const [availableCandidates, setAvailableCandidates] = useState([
+    // Exemplo de candidatos disponíveis
+    { id: '1', name: 'Candidato 1' },
+    { id: '2', name: 'Candidato 2' },
+  ]);
+  const [teamMembers, setTeamMembers] = useState([]);
+  const navigate = useNavigate();
 
-  const [nome, setNome] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [curriculos, setCurriculos] = useState(["67476832893fb118482365cf"]); 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-  let user = getDados()
-
-  function funCriarRecrutamento(e){
-    e.preventDefault();
-    console.log("Nome: " + nome)
-    console.log("Descricao: " + descricao)
-
-
-    const url = axios.create({
-      baseURL: "https://picapauapi-production.up.railway.app/api",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      }
+  const addToTeam = (candidate) => {
+    setTeamMembers([...teamMembers, candidate]);
+    setAvailableCandidates(availableCandidates.filter((c) => c.id !== candidate.id));
+    setFormData({
+      ...formData,
+      curriculos: [...formData.curriculos, candidate.id],
     });
-    url.post("recrutamentos", {
-      nome:nome,
-      descricao:descricao,
-      curriculos:curriculos
-    }).then((resp) => {
-      console.log(resp.data);
-      setNome("");
-      setDescricao("");
-    }).catch((error) => {
-      console.log(error);
-    })
-  }
+  };
 
-  //
+  const removeFromTeam = (member) => {
+    setAvailableCandidates([...availableCandidates, member]);
+    setTeamMembers(teamMembers.filter((m) => m.id !== member.id));
+    setFormData({
+      ...formData,
+      curriculos: formData.curriculos.filter((id) => id !== member.id),
+    });
+  };
 
-  const [listaCurriculos, setListaCurriculos] = useState([]);
-
-  useEffect(() => {
-    const httpCurriculos = axios.create({
-      baseURL: "https://picapauapi-production.up.railway.app/api",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      }
-    })
-    
-    httpCurriculos.get("curriculos/meus-curriculos")
-      .then((response) => {
-        setListaCurriculos(response.data.curriculos)
-        console.log(response.data.curriculos);
-        console.log(listaCurriculos);
-      })
-      .catch((error) => {
-        console.error(error);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('https://picapauapi-production.up.railway.app/api/recrutamentos/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
-  }, []);
-
-  useEffect(() => {
-    console.log(listaCurriculos);
-  }, [listaCurriculos]);
+      const data = await response.json();
+      if (response.ok) {
+        alert('Recrutamento criado com sucesso!');
+        navigate(`/recrutamentos/${data._id}`);
+      } else {
+        alert('Erro ao criar recrutamento: ' + data.message);
+      }
+    } catch (error) {
+      alert('Erro ao conectar ao servidor: ' + error.message);
+    }
+  };
 
   return (
     <>

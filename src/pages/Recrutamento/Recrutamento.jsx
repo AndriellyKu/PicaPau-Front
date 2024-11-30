@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Recrutamento.css';
 import Headeri from '../../components/Headeri';
 import {setDados, getDados} from "../../components/local.jsx"
@@ -33,14 +34,11 @@ const Recrutamento = () => {
         console.log(error);
     });
   }
-
   return (
     <>
       <Headeri />
-      
       <div className="recrutamentos-container">
         <h1 className="title">Recrutamentos</h1>
-
         <div className="recrutamentos-list">
             {recrutamento.map((rec) => {
 
