@@ -12,6 +12,7 @@ import Equipe from './pages/Equipe/Equipe.jsx';
 import Lider from './pages/lider/Lider.jsx';
 import RecrutamentoDetalhes from './pages/RecrutamentoDetalhes/RecrutamentoDetalhes.jsx';
 import InserirCurriculo from './pages/InserirCurriculo/InserrirCurriculo.jsx'; // Verifique a capitalização
+import CurriculosPage from './pages/Curriculos/Curriculos.jsx'; // Importe o novo componente
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,8 @@ const router = createBrowserRouter([
       { path: "equipe", element: <Equipe /> },
       { path: "lider", element: <Lider /> },
       { path: "RecrutamentoDetalhes", element: <RecrutamentoDetalhes /> },
-      { path: "inserir-curriculo", element: <InserirCurriculo /> } // Adicione a nova rota
+      { path: "inserir-curriculo", element: <InserirCurriculo /> },
+      { path: "curriculos", element: <CurriculosPage /> } // Adicione a nova rota
     ]
   }
 ]);

@@ -5,9 +5,7 @@ import Headeri from '../../components/Headeri';
 const Home = () => {
   return (
     <div className="home-container">
-    
-    <Headeri />
-
+      <Headeri />
       <div className="options-container">
         <div className="option-card">
           <h3>Inserir Currículo ao Banco de Dados</h3>
@@ -19,8 +17,15 @@ const Home = () => {
         <div className="option-card">
           <h3>Criar Recrutamento</h3>
           <p>Inicie um novo recrutamento e gerencie o processo seletivo da empresa.</p>
-          <button onClick={() => window.location.href = '/Recrutamento'}>
-            Lista de Recrutamentos
+          <button onClick={() => window.location.href = '/recrutamento'}>
+            Criar Recrutamento
+          </button>
+        </div>
+        <div className="option-card">
+          <h3>Ver Currículos</h3>
+          <p>Acesse a lista de currículos disponíveis no banco de dados.</p>
+          <button onClick={() => window.location.href = '/curriculos'}>
+            Ver Currículos
           </button>
         </div>
       </div>
